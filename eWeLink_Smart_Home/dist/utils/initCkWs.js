@@ -125,8 +125,8 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                     return __generator(this, function (_e) {
                         try {
                             type = ws.type, data = ws.data;
-                            logger_1.logger.info("receive CK-WS msg: type: ".concat(type));
-                            logger_1.logger.info("receive CK-WS msg: data: ".concat(JSON.stringify(data)));
+                            logger_1.logger.debug("receive CK-WS msg: type: ".concat(type));
+                            logger_1.logger.debug("receive CK-WS msg: data: ".concat(JSON.stringify(data)));
                             if (type === 'message' && data !== 'pong') {
                                 tmp = JSON.parse(data);
                                 if (!tmp.deviceid) {
