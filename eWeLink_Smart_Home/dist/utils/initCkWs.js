@@ -134,6 +134,43 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                                 }
                                 device = Controller_1.default.getDevice(tmp.deviceid);
                                 if (tmp.action === 'update') {
+
+                                    if (tmp.params && tmp.params.localKeyPass) {
+                                        var localKeyPass = tmp.params.localKeyPass;
+                                    
+                                        fetch('http://supervisor/core/api/events/sonoff_t6_touch', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Authorization': 'Bearer ' + process_1.default.env.SUPERVISOR_TOKEN,
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({
+                                                deviceid: tmp.deviceid,
+                                                outlet: localKeyPass.outlet,
+                                                key: localKeyPass.key
+                                            })
+                                        })
+                                        .then(function (response) {
+                                            if (response.ok) {
+                                                logger_1.logger.info(
+                                                    "T6 touch event sent to HA: outlet=" +
+                                                    localKeyPass.outlet +
+                                                    " key=" +
+                                                    localKeyPass.key
+                                                );
+                                            } else {
+                                                logger_1.logger.error(
+                                                    "T6 touch event HA error: HTTP " + response.status
+                                                );
+                                            }
+                                        })
+                                        .catch(function (error) {
+                                            logger_1.logger.error(
+                                                "T6 touch event HA error: " + error
+                                            );
+                                        });
+                                    }
+                                    
                                     if (device instanceof LanDeviceController_1.default || device instanceof CloudDeviceController_1.default) {
                                         (0, mergeDeviceParams_1.default)(device.params, tmp.params);
                                     }
