@@ -1,5 +1,4 @@
-ARG BUILD_FROM
-FROM node:25-alpine
+FROM ghcr.io/home-assistant/base:3.24
 
 ENV LANG=C.UTF-8
 ENV CK_API_ENV=prod
